@@ -16,8 +16,7 @@ describe('ubl-js', function () {
         'aa/ac': 'a-aa0-ac',
       }
       load_test_file(0, (root_el) => {
-        Object.keys(expectations).forEach(function (xp) {
-          const id = expectations[xp];
+        _.each(expectations, (id, xp) => {
           const el = maybes.maybe_find_one(root_el, xp);
 
           expect(el).to.not.be.null;
@@ -40,8 +39,7 @@ describe('ubl-js', function () {
         'ac': 'A-AC',
       }
       load_test_file(0, (root_el) => {
-        Object.keys(expectations).forEach(function (xp) {
-          const text = expectations[xp];
+        _.each(expectations, (text, xp) => {
           const t = maybes.maybe_find_one_text(root_el, xp);
 
           expect(t).to.eql(text);
@@ -63,8 +61,7 @@ describe('ubl-js', function () {
         'ae': 1234,
       }
       load_test_file(0, (root_el) => {
-        Object.keys(expectations).forEach(function (xp) {
-          const i = expectations[xp];
+        _.each(expectations, (i, xp) => {
           const n = maybes.maybe_find_one_int(root_el, xp);
 
           expect(n).to.eql(i);
@@ -91,8 +88,7 @@ describe('ubl-js', function () {
         'ac': 'a-ac',
       }
       load_test_file(0, (root_el) => {
-        Object.keys(expectations).forEach(function (xp) {
-          const id = expectations[xp];
+        _.each(expectations, (id, xp) => {
           const ac_id = maybes.maybe_find_one_convert(convert_el, root_el, xp);
 
           expect(ac_id).to.eql([id]);
@@ -115,8 +111,7 @@ describe('ubl-js', function () {
         'ac': 'a-ac',
       }
       load_test_file(0, (root_el) => {
-        Object.keys(expectations).forEach(function (xp) {
-          const id = expectations[xp];
+        _.each(expectations, (id, xp) => {
           const ac_id = maybes.maybe_find_one_convert(convert_empty, root_el, xp);
 
           expect(ac_id).to.eql([]);
@@ -138,9 +133,7 @@ describe('ubl-js', function () {
       };
 
       load_test_file(0, (root_el) => {
-        Object.keys(expectations).forEach(function (xp) {
-          const ex_attrs = expectations[xp];
-
+        _.each(expectations, (ex_attrs, xp) => {
           maybes.maybe_find_one(root_el, xp, ['x', 'y'], (el, attrs) => {
             expect(attrs).to.eql(ex_attrs);
           });
@@ -156,9 +149,7 @@ describe('ubl-js', function () {
       };
 
       load_test_file(0, (root_el) => {
-        Object.keys(expectations).forEach(function (xp) {
-          const ids = expectations[xp];
-
+        _.each(expectations, (ids, xp) => {
           const els = maybes.maybe_find_many(root_el, xp);
 
           expect(els).to.not.be.empty;
