@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
 
 function maybe_find_one(pn, xp, attrs = [], fn = null) {
-  let rv = pn.find(xp)[0];
+  const rv = pn.get(xp);
 
   if (rv) {
     attrs = _.reduce(attrs, (o, k) => {
@@ -9,49 +9,33 @@ function maybe_find_one(pn, xp, attrs = [], fn = null) {
       return attr ? _.set(o, k, attr.value()) : o
     }, {})
   }
-  if (rv && fn) {
-    rv = fn(rv, attrs)
-  }
-
-  return rv;
+  return (rv && fn) ? fn(rv, attrs) : rv;
 }
 
 function maybe_find_many(pn, xp, fn) {
-  let rv = pn.find(xp);
-  if (rv && _.some(rv, (r)=>!!r) && fn) {
-    rv = fn(rv);
-  }
+  const rv = pn.find(xp);
 
-  return rv;
+  return (rv && _.some(rv, (r)=>!!r) && fn) ? fn(rv) : rv;
 }
 
 function maybe_find_list(pn, xps, fn) {
-  let rv = _.map(xps, (xp) => {
-    pn.find(xp);
-  });
+  const rv = _.reduce(xps, (els, xp) => {
+    const n = pn.find(xp);
+    return n ? _.concat(els, n) : els;
+  }, []);
 
-  rv = _.compact(rv);
-
-  if (rv && _.some(rv, (r)=>!!r) && fn) {
-    rv = fn(rv);
-  }
-
-  return rv;
+  return (rv && _.some(rv, (r)=>!!r) && fn) ? fn(rv) : rv;
 }
 
 function maybe_find_set(pn, xp_set, fn = null) {
-  let rv = _.reduce(Object.keys(xp_set), (o, k) => {
+  const rv = _.reduce(Object.keys(xp_set), (o, k) => {
     maybe_find_one(pn, xp_set[k], null, (n) => {
       o = _.merge(o, {[k]: n});
     });
     return o;
   }, {});
 
-  if (_.some(rv, (r)=>!!r) && fn) {
-    rv = fn(rv);
-  }
-
-  return rv;
+  return (_.some(rv, (r)=>!!r) && fn) ? fn(rv) : rv;
 }
 
 function maybe_find_set_text(pn, xp_set, fn = null) {
@@ -62,85 +46,58 @@ function maybe_find_set_text(pn, xp_set, fn = null) {
     }, {});
   });
 
-  if (_.some(rv, (r)=>!!r) && fn) {
-    rv = fn(rv);
-  }
-
-  return rv;
+  return (_.some(rv, (r)=>!!r) && fn) ? fn(rv) : rv;
 }
 
 function maybe_find_one_text(pn, xp, attrs = [], fn = null) {
   return maybe_find_one(pn, xp, attrs, (n, attrs) => {
-    let rv = n.text();
-    if (fn) {
-      rv = fn(rv, attrs);
-    }
+    const rv = n.text();
 
-    return rv;
+    return fn ? fn(rv, attrs) : rv;
   });
 }
 
 function maybe_find_list_text(pn, xps, fn = null) {
   return maybe_find_list(pn, xps, (ns) => {
-    let rv = _.map(ns, (n) => n.text);
+    const rv = _.map(ns, (n) => n.text);
 
-    if (fn) {
-      rv = fn(rv);
-    }
-
-    return rv;
+    return fn ? fn(rv) : rv;
   });
 }
 
 function maybe_find_one_tagged_text(pn, xp, fn = null) {
   return maybe_find_one(pn, xp, ['languageID'], (n, attrs) => {
-    let rv = _.tap({text: n.text()}, (o) => {
+    const rv = _.tap({text: n.text()}, (o) => {
       if (attrs.languageID) {
         o.language = attrs.languageID;
       }
     });
 
-    if (fn) {
-      rv = fn(rv);
-    }
-
-    return rv;
+    return fn ? fn(rv) : rv;
   });
 }
 
 function maybe_find_one_int(pn, xp, attrs = [], fn = null) {
   return maybe_find_one(pn, xp, attrs, (n, attrs) => {
-    let rv = _.toInteger(n.text())
+    const rv = _.toInteger(n.text())
 
-    if (fn) {
-      rv = fn(rv, attrs);
-    }
-
-    return rv;
+    return fn ? fn(rv, attrs) : rv;
   });
 }
 
 function maybe_find_one_convert(sym, pn, xp, fn = null) {
   return maybe_find_one(pn, xp, null, (n) => {
-    let rv = sym(n);
+    const rv = sym(n);
 
-    if (rv && _.some(rv, (r)=>!!r) && fn) {
-      rv = fn(rv);
-    }
-
-    return rv;
+    return (rv && _.some(rv, (r)=>!!r) && fn) ? fn(rv) : rv;
   });
 }
 
 function maybe_find_many_convert(sym, pn, xp, fn = null) {
   return maybe_find_many(pn, xp, (ns) => {
-    let rv = _.map(ns, (n) => sym(n));
+    const rv = _.map(ns, (n) => sym(n));
 
-    if (rv && _.some(rv, (r)=>!!r) && fn) {
-      rv = fn(rv);
-    }
-
-    return rv;
+    return (rv && _.some(rv, (r)=>!!r) && fn) ? fn(rv) : rv;
   });
 }
 
