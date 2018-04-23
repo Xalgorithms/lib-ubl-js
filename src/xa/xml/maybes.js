@@ -1,8 +1,17 @@
 import * as _ from 'lodash';
 
 function maybe_find_one(pn, xp, attrs = [], fn = null) {
-  const rv = pn.get(xp);
+  let nses;
 
+  // In case we search by namespace, we should specify them
+  if (_.includes(xp, ':')) {
+    const root = pn.root ? pn.root() : pn;
+
+    nses = _.reduce(root.namespaces(), (o, n) => {
+      return _.merge(o, {[n.prefix() || 'xmlns']: n.href()})
+    }, {});
+  }
+  const rv = pn.get(xp, nses);
   if (rv) {
     attrs = _.reduce(attrs, (o, k) => {
       const attr = rv.attr(k);
@@ -13,7 +22,17 @@ function maybe_find_one(pn, xp, attrs = [], fn = null) {
 }
 
 function maybe_find_many(pn, xp, fn) {
-  const rv = pn.find(xp);
+  let nses;
+
+  // In case we search by namespace, we should specify them
+  if (_.includes(xp, ':')) {
+    const root = pn.root ? pn.root() : pn;
+
+    nses = _.reduce(root.namespaces(), (o, n) => {
+      return _.merge(o, {[n.prefix() || 'xmlns']: n.href()})
+    }, {});
+  }
+  const rv = pn.find(xp, nses);
 
   return (rv && _.some(rv, (r)=>!!r) && fn) ? fn(rv) : rv;
 }
