@@ -1,16 +1,9 @@
 import * as _ from 'lodash';
 
 function maybe_find_one(pn, xp, attrs = [], fn = null) {
-  let nses;
-
-  // In case we search by namespace, we should specify them
-  if (_.includes(xp, ':')) {
-    const root = pn.root ? pn.root() : pn;
-
-    nses = _.reduce(root.namespaces(), (o, n) => {
-      return _.merge(o, {[n.prefix() || 'xmlns']: n.href()})
-    }, {});
-  }
+  const nses = compose_namespaces(pn, xp);
+  console.log("XP", xp);
+  console.log("NSES", nses);
   const rv = pn.get(xp, nses);
   if (rv) {
     attrs = _.reduce(attrs, (o, k) => {
@@ -22,19 +15,22 @@ function maybe_find_one(pn, xp, attrs = [], fn = null) {
 }
 
 function maybe_find_many(pn, xp, fn) {
-  let nses;
-
-  // In case we search by namespace, we should specify them
-  if (_.includes(xp, ':')) {
-    const root = pn.root ? pn.root() : pn;
-
-    nses = _.reduce(root.namespaces(), (o, n) => {
-      return _.merge(o, {[n.prefix() || 'xmlns']: n.href()})
-    }, {});
-  }
+  const nses = compose_namespaces(pn, xp);
+  console.log("XP_MANY", xp);
+  console.log("NSES_MANY", nses);
   const rv = pn.find(xp, nses);
 
   return (rv && _.some(rv, (r)=>!!r) && fn) ? fn(rv) : rv;
+}
+
+function compose_namespaces(pn, xp) {
+  if (_.includes(xp, ':')) {
+    const root = pn.root ? pn.root() : pn;
+
+    return _.reduce(root.namespaces(), (o, n) => {
+      return _.merge(o, {[n.prefix() || 'xmlns']: n.href()})
+    }, {});
+  }
 }
 
 function maybe_find_list(pn, xps, fn) {

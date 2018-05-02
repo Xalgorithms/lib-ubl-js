@@ -132,7 +132,7 @@ function maybe_find_identifier(pel, xp, fn = null) {
 
 function maybe_find_address(pel, xp, fn = null) {
   maybes.maybe_find_one(pel, xp, null, (el) => {
-    fn( extract_address(el) );
+    fn(extract_address(el));
   });
 }
 
@@ -336,7 +336,7 @@ function extract_address(el) {
     ];
 
     maybes.maybe_find_list_text(el, address_list, (texts) => {
-      const streets = _.filter(texts, (t) => t.length);
+      const streets = _.filter(texts, (t) => _.size(t));
       if (streets.length) {
         o.street = streets;
       }
@@ -399,7 +399,7 @@ function extract_person(el) {
     });
 
     maybes.maybe_find_list_text(el, names_list, (texts) => {
-      const names = _.filter( texts, (t) => t.length );
+      const names = _.filter(texts, (t) => _.size(t));
       if (names.length) {
         o.names = names;
       }
