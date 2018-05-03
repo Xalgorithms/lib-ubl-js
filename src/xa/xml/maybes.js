@@ -2,8 +2,6 @@ import * as _ from 'lodash';
 
 function maybe_find_one(pn, xp, attrs = [], fn = null) {
   const nses = compose_namespaces(pn, xp);
-  console.log("XP", xp);
-  console.log("NSES", nses);
   const rv = pn.get(xp, nses);
   if (rv) {
     attrs = _.reduce(attrs, (o, k) => {
@@ -16,8 +14,6 @@ function maybe_find_one(pn, xp, attrs = [], fn = null) {
 
 function maybe_find_many(pn, xp, fn) {
   const nses = compose_namespaces(pn, xp);
-  console.log("XP_MANY", xp);
-  console.log("NSES_MANY", nses);
   const rv = pn.find(xp, nses);
 
   return (rv && _.some(rv, (r)=>!!r) && fn) ? fn(rv) : rv;
