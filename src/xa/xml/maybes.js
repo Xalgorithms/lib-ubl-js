@@ -31,7 +31,8 @@ function compose_namespaces(pn, xp) {
 
 function maybe_find_list(pn, xps, fn) {
   const rv = _.reduce(xps, (els, xp) => {
-    const n = pn.find(xp);
+    const nses = compose_namespaces(pn, xp);
+    const n = pn.find(xp, nses);
     return n ? _.concat(els, n) : els;
   }, []);
 

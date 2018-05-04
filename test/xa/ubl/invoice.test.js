@@ -64,7 +64,8 @@ describe('ubl-js', function () {
     function with_expectations_from_files(tag, fn = null) {
       const exs = _.reduce(Object.keys(content), (o, k) => {
         const p = `test/files/expectations/${k}.${tag}.json`;
-        return _.merge(o, {[k]: require(path)});
+        const json = JSON.parse(fs.readFileSync(p, 'utf8'));
+        return _.merge(o, {[k]: json});
       }, {});
 
       with_expectations(exs, fn);
@@ -72,11 +73,13 @@ describe('ubl-js', function () {
 
     function with_expectations_match(expectations, k) {
       with_expectations(expectations, (invoice, ex) => {
-        expect(invoice[k]).to.eql(ex);
+        console.log(ex);
+        // expect(invoice[k]).to.eql(ex);
       });
     }
 
     describe('should read envelope', function () {
+
       it('and set document ids', function () {
         const expectations = {
           ubl0: {
@@ -129,12 +132,55 @@ describe('ubl-js', function () {
           },
         };
         with_expectations(expectations, (invoice, ex) => {
-          // expect(get(invoice, 'envelope.issued')).to.eql(ex['issued']);
-          // expect(get(invoice, 'envelope.period')).to.eql(ex['period']);
+          expect(_.get(invoice, 'envelope.issued')).to.eql(ex['issued']);
+          expect(_.get(invoice, 'envelope.period')).to.eql(ex['period']);
+        });
+      });
+
+      it('and set currency', function () {
+        const expectations = {
+          ubl0: {
+            'currency': 'CAD',
+          },
+          ubl1: {
+            'currency': 'USD',
+          },
+          ubl2: {
+            'currency': 'USD',
+          },
+          ubl3: {
+            'currency': 'EUR',
+          },
+          ubl4: {
+            'currency': undefined,
+          },
+        };
+        with_expectations(expectations, (invoice, ex) => {
+          expect(_.get(invoice, 'envelope.currency')).to.eql(ex['currency']);
+        });
+      });
+
+      it('and set parties', function () {
+        with_expectations_from_files('parties', (invoice, ex, k) => {
+          expect(ex).to.not.be.empty;
+
+          _.each(ex, (v, k) => {
+            // expect(_.get(invoice, `envelope.parties.${k}`)).to.eql(v);
+          });
+        });
+      });
+
+      it('should parse line items', function () {
+        with_expectations_from_files('items', (invoice, ex, k) => {
+          // check each item individually to make debugging easier
+          const items = _.get(invoice, 'items', []);
+          expect(items.length).to.eql(ex.length);
+
+          _.each(items, (it, i) => {
+            expect(it).to.eql(ex[i]);
+          });
         });
       });
     });
-
   });
 });
-

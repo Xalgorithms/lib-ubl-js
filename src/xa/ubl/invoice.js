@@ -78,7 +78,7 @@ function extract_envelope(el) {
 }
 
 function extract_items(el) {
-  maybes.maybe_find_many_convert(extract_item, el, `${ns(el, 'cac')}:InvoiceLine`);
+  return maybes.maybe_find_many_convert(extract_item, el, `${ns(el, 'cac')}:InvoiceLine`);
 }
 
 function extract_item(el) {
