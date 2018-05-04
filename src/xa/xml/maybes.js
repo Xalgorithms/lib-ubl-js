@@ -1,8 +1,8 @@
 import * as _ from 'lodash';
 
 function maybe_find_one(pn, xp, attrs = [], fn = null) {
-  const rv = pn.get(xp);
-
+  const nses = compose_namespaces(pn, xp);
+  const rv = pn.get(xp, nses);
   if (rv) {
     attrs = _.reduce(attrs, (o, k) => {
       const attr = rv.attr(k);
@@ -13,14 +13,26 @@ function maybe_find_one(pn, xp, attrs = [], fn = null) {
 }
 
 function maybe_find_many(pn, xp, fn) {
-  const rv = pn.find(xp);
+  const nses = compose_namespaces(pn, xp);
+  const rv = pn.find(xp, nses);
 
   return (rv && _.some(rv, (r)=>!!r) && fn) ? fn(rv) : rv;
 }
 
+function compose_namespaces(pn, xp) {
+  if (_.includes(xp, ':')) {
+    const root = pn.root ? pn.root() : pn;
+
+    return _.reduce(root.namespaces(), (o, n) => {
+      return _.merge(o, {[n.prefix() || 'xmlns']: n.href()})
+    }, {});
+  }
+}
+
 function maybe_find_list(pn, xps, fn) {
   const rv = _.reduce(xps, (els, xp) => {
-    const n = pn.find(xp);
+    const nses = compose_namespaces(pn, xp);
+    const n = pn.find(xp, nses);
     return n ? _.concat(els, n) : els;
   }, []);
 
