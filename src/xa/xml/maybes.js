@@ -71,7 +71,7 @@ function maybe_find_one_text(pn, xp, attrs = [], fn = null) {
 
 function maybe_find_list_text(pn, xps, fn = null) {
   return maybe_find_list(pn, xps, (ns) => {
-    const rv = _.map(ns, (n) => n.text);
+    const rv = _.map(ns, (n) => n.text());
 
     return fn ? fn(rv) : rv;
   });

@@ -377,7 +377,7 @@ function extract_location(el) {
 
 function extract_country(el) {
   return _.tap({}, (o) => {
-    maybes.maybe_find_one_text(el, `${ns(el, 'cbc')}:Name`, (text) => {
+    maybes.maybe_find_one_text(el, `${ns(el, 'cbc')}:Name`, null, (text) => {
       o.name = text;
     });
     maybe_find_code(el, `${ns(el, 'cbc')}:IdentificationCode`, (code) => {

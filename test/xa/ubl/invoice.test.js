@@ -73,13 +73,11 @@ describe('ubl-js', function () {
 
     function with_expectations_match(expectations, k) {
       with_expectations(expectations, (invoice, ex) => {
-        console.log(ex);
-        // expect(invoice[k]).to.eql(ex);
+        expect(invoice[k]).to.eql(ex);
       });
     }
 
     describe('should read envelope', function () {
-
       it('and set document ids', function () {
         const expectations = {
           ubl0: {
@@ -165,7 +163,7 @@ describe('ubl-js', function () {
           expect(ex).to.not.be.empty;
 
           _.each(ex, (v, k) => {
-            // expect(_.get(invoice, `envelope.parties.${k}`)).to.eql(v);
+            expect(_.get(invoice, `envelope.parties.${k}`)).to.eql(v);
           });
         });
       });
