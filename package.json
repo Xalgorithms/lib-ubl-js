@@ -4,6 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
+    "commit": "git-cz",
     "check-coverage": "nyc check-coverage --statements 100 --branches 100 --functions 100 --lines 100",
     "watch:test": "npm t -- -w",
     "test": "mocha --recursive --compilers js:babel-register",
@@ -23,6 +24,8 @@
     "babel-preset-stage-2": "^6.24.1",
     "babel-register": "^6.26.0",
     "chai": "^4.1.2",
+    "commitizen": "2.9.6",
+    "cz-conventional-changelog": "2.1.0",
     "ghooks": "2.0.4",
     "json-loader": "^0.5.7",
     "mocha": "^5.1.0",
@@ -45,6 +48,9 @@
   "config": {
     "ghooks": {
       "pre-commit": "npm run test"
+    },
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
     }
   }
 }
