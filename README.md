@@ -9,3 +9,6 @@ license.
 
 # xa-ubl
 UBL document parsing for Lichen
+
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+![MIT License](https://img.shields.io/github/license/mashape/apistatus.svg)
