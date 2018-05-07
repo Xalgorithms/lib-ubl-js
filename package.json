@@ -23,6 +23,7 @@
     "babel-preset-stage-2": "^6.24.1",
     "babel-register": "^6.26.0",
     "chai": "^4.1.2",
+    "ghooks": "2.0.4",
     "json-loader": "^0.5.7",
     "mocha": "^5.1.0",
     "npm-run-all": "^4.1.2",
@@ -40,5 +41,10 @@
   "dependencies": {
     "libxmljs": "^0.18.7",
     "lodash": "^4.17.5"
+  },
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm run test"
+    }
   }
 }
