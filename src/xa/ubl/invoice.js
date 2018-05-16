@@ -432,8 +432,8 @@ function transpose_keys(kmap, vals) {
   }, {});
 }
 
-export {
+module.exports = {
   ns,
   parse_url,
   parse,
-}
+};

@@ -37,7 +37,7 @@ function load(b, fn = null) {
   }
 }
 
-export {
+module.exports = {
   load_and_parse_url,
   load_and_parse,
   load,
