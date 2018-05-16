@@ -123,7 +123,7 @@ function maybe_find_identifier(pel, xp, fn = null) {
   maybes.maybe_find_one(pel, xp, null, (el) => {
     const yv = extract_identifier(el);
 
-    if (_.some(yv, (y)=>!!y)) {
+    if (_.some(yv, (y)=>y !== false && y !== null)) {
       fn(yv);
     }
   });
