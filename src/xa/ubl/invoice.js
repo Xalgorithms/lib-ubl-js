@@ -1,5 +1,4 @@
-import * as _ from 'lodash';
-
+const _ = require('lodash');
 const parser = require('../xml/parse');
 const maybes = require('../xml/maybes');
 

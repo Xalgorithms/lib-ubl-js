@@ -6,7 +6,7 @@ const libxml = require("libxmljs");
 
 const invoice = require('../../../src/xa/ubl/invoice');
 
-import * as _ from 'lodash';
+const _ = require('lodash');
 
 describe('ubl-js', function () {
   describe('invoice', function () {
