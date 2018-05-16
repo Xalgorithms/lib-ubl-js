@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+const _ = require('lodash');
 
 function maybe_find_one(pn, xp, attrs = [], fn = null) {
   const nses = compose_namespaces(pn, xp);

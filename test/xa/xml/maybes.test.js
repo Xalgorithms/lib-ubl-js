@@ -3,8 +3,7 @@ const expect = chai.expect;
 const should = chai.should();
 const maybes = require('../../../src/xa/xml/maybes');
 const load_test_file = require('../../support/test_files').load_test_file;
-
-import * as _ from 'lodash';
+const _ = require('lodash');
 
 describe('ubl-js', function () {
   describe('maybes', function () {

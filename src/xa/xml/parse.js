@@ -3,7 +3,7 @@ const libxml = require("libxmljs");
 
 const maybes = require('./maybes');
 
-import * as _ from 'lodash';
+const _ = require('lodash');
 
 function load_and_parse_url(url, sym_root_xp, sym_make, fn = null) {
   fs.readFile(url, 'utf8', function(err, data) {
