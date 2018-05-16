@@ -113,7 +113,7 @@ function maybe_find_many_convert(sym, pn, xp, fn = null) {
   });
 }
 
-export {
+module.exports = {
   maybe_find_one,
   maybe_find_many,
   maybe_find_list,
