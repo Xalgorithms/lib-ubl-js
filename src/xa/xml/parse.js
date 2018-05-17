@@ -1,5 +1,12 @@
 // Copyright 2018 Hayk Pilosyan <hayk.pilos@gmail.com>
 
+// This file is part of Lichen, a functional component of an Internet
+// of Rules (IoR).
+
+// ACKNOWLEDGEMENTS
+// Funds: Xalgorithms Foundation
+// Collaborators: Don Kelly, Joseph Potvin and Bill Olders.
+
 // Licensed under the Apache License, Version 2.0 (the "License"); you
 // may not use this file except in compliance with the License. You may
 // obtain a copy of the License at
