@@ -1,14 +1,7 @@
-# Licensing
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![Build Status](https://travis-ci.com/Xalgorithms/xa-ubl-js.svg?branch=master)](https://travis-ci.com/Xalgorithms/xa-ubl-js)
 
-The material in this repository is licensed under a dual license -
-[Apache 2.0](./LICENSE.AL) or [GPL 3.0](./LICENSE.GPL). This means
-that you may choose which of the licenses most suits your needs and
-requirements and use the software under the terms of the selected
-license.
-
-
-# xa-ubl
+# xa-ubl-js
 UBL document parsing for Lichen
 
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-![MIT License](https://img.shields.io/github/license/mashape/apistatus.svg)
