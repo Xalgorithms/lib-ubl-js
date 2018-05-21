@@ -6,3 +6,5 @@ cache:
     - "node_modules"
 script:
   - yarn test
+notifications:
+    slack: xalgo-lichen:Hebq0wl01XBCrd2kMUvD7Y6U
